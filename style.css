@@ -19,3 +19,9 @@ calcite-loader {
   align-self: center;
   justify-self: center;
 }
+
+.esri-ui-top-right .esri-component,
+.esri-ui-top-left .esri-component {
+  /* padding: 5; */
+  margin-bottom: 0;
+}

@@ -9,7 +9,7 @@
   <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/2.7.1/calcite.css" />
   <!-- <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/dark/main.css" /> -->
   <script src="https://js.arcgis.com/4.29/"></script>
-  <script src="script.js"></script>
+  <script src="scriptComponents.js"></script>
   <script type="module" src="https://js.arcgis.com/calcite-components/2.7.1/calcite.esm.js"></script>
   <script type="module" src="https://js.arcgis.com/map-components/4.29/arcgis-map-components.esm.js"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -17,8 +17,11 @@
 
 <body>
   <div>
-    <calcite-shell content-behind>      
-      <calcite-shell-panel slot="panel-start" display-mode="float">
+    <calcite-shell content-behind>
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo slot="logo" target="_blank" />
+      </calcite-navigation>
+      <!-- <calcite-shell-panel slot="panel-start" display-mode="float">
         <calcite-action-bar slot="action-bar">
           <calcite-action data-action-id="draw" icon="rectangle-plus" text="Draw"></calcite-action>
           <calcite-action data-action-id="basemaps" icon="basemap" text="Basemaps"></calcite-action>
@@ -26,15 +29,17 @@
           <calcite-action data-action-id="information" icon="information" text="Information"></calcite-action>
         </calcite-action-bar>
 
-        <!-- Map-specific panels (each one provides a div for ArcGIS Maps SDK for JavaScript widgets) -->
         <calcite-panel heading="Draw" height-scale="l" data-panel-id="draw" hidden>
           <div id="sketchContainer"></div>
         </calcite-panel>
         <calcite-panel heading="Basemaps" height-scale="l" data-panel-id="basemaps" hidden>
-          <div id="basemapGalleryContainer"></div>
+          <arcgis-basemap-gallery />
+
         </calcite-panel>
+
         <calcite-panel heading="Layers" height-scale="l" data-panel-id="layers" hidden>
           <div id="layerListContainer"></div>
+
         </calcite-panel>
         <calcite-panel heading="Information" height-scale="l" data-panel-id="information" hidden>
           <calcite-button alignment="center" appearance="solid" kind="danger" scale="l" split-child="primary"
@@ -45,11 +50,29 @@
             <p>A platypus is a mammal with a bill, similar to a duck. They use their bill to sense prey via
               electrolocation.</p>
           </calcite-tip>
-        </calcite-panel>
+        </calcite-panel> -->
 
       </calcite-shell-panel>
+      <arcgis-map item-id="095b6944f4764c4a8ebf5d4483d7ee22">
+        <!-- <arcgis-expand position="top-right">
+          <arcgis-legend />
+        </arcgis-expand> -->
+        <arcgis-expand position="top-right" expand-icon="rectangle-plus" id="expand-group">
+          <arcgis-sketch creation-mode="single" layout="horizontal"> </arcgis-sketch>
+        </arcgis-expand>
+        <arcgis-expand position="top-right" class="expand-group">
+          <arcgis-basemap-gallery>
+        </arcgis-expand>
+        <arcgis-expand position="top-right" class="expand-group">
+          <arcgis-layer-list drag-enabled="true"> </arcgis-layer-list>
+        </arcgis-expand>
+        <!-- <arcgis-expand position="top-right">
+          
+        </arcgis-expand> -->
 
-      <div id="viewDiv"></div>
+      </arcgis-map>
+
+      <!-- <div id="viewDiv"></div> -->
       <calcite-alert open label="A report alert" auto-close icon="applications" kind="success" placement="bottom">
         <div slot="title">Aplikace nactena </div>
         <div slot="message">Tohle je testovaci komponenta upozorneni</div>
@@ -58,7 +81,21 @@
       </calcite-alert>
 
     </calcite-shell>
+    <calcite-loader></calcite-loader>
+
   </div>
+  <!-- <script>
+    document.querySelector("arcgis-map").addEventListener("arcgisViewReadyChange", (event) => {
+      const { portalItem } = event.target.map;
+      const navigationLogo = document.querySelector("calcite-navigation-logo");
+      navigationLogo.heading = portalItem.title;
+      navigationLogo.description = portalItem.snippet;
+      navigationLogo.thumbnail = portalItem.thumbnailUrl;
+      navigationLogo.href = portalItem.itemPageUrl;
+      navigationLogo.label = "Thumbnail of map";
+
+    });
+  </script> -->
 </body>
 
 </html>
