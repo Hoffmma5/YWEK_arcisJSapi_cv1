@@ -1,22 +1,24 @@
-require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/widgets/Sketch", "esri/layers/GraphicsLayer", "esri/widgets/Search", "esri/widgets/ScaleBar", "esri/widgets/LayerList", "esri/widgets/BasemapGallery"], (Map, MapView, FeatureLayer, Sketch, GraphicsLayer, Search, ScaleBar, LayerList, BasemapGallery) => {
+require(["esri/Map","esri/WebMap", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/widgets/Sketch", "esri/layers/GraphicsLayer", "esri/widgets/Search", "esri/widgets/ScaleBar", "esri/widgets/LayerList", "esri/widgets/BasemapGallery"], (Map, WebMap, MapView, FeatureLayer, Sketch, GraphicsLayer, Search, ScaleBar, LayerList, BasemapGallery) => {
   const graphicsLayer = new GraphicsLayer();
 
-  const map = new Map({
-    basemap: "hybrid",
+  const webmap = new WebMap({
+    portalItem: {
+      id: "095b6944f4764c4a8ebf5d4483d7ee22"
+    }
   });
 
   const mapView = new MapView({
     container: "viewDiv",
-    map: map,
+    map: webmap,
 
-    extent: {
-      // autocasts as new Extent()
-      xmin: -9177811,
-      ymin: 4247000,
-      xmax: -9176791,
-      ymax: 4247784,
-      spatialReference: 102100
-    },
+    // extent: {
+    //   // autocasts as new Extent()
+    //   xmin: -9177811,
+    //   ymin: 4247000,
+    //   xmax: -9176791,
+    //   ymax: 4247784,
+    //   spatialReference: 102100
+    // },
 
     padding: {
       left: 49
@@ -66,7 +68,8 @@ require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/wid
     // layerList widget
     const layerList = new LayerList({
       view: mapView,
-      container: layerListContainer
+      container: layerListContainer,
+      dragEnabled: true
     });
 
     // BasemapGallery widget
@@ -113,5 +116,5 @@ require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/wid
 
   });
 
-  map.addMany([featureLayer, graphicsLayer]);
+  webmap.add(graphicsLayer);
 });
