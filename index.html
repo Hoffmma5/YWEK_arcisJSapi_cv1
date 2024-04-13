@@ -6,16 +6,27 @@
   <title>Intro to FeatureLayer | Sample | ArcGIS Maps SDK for JavaScript 4.29</title>
 
   <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/2.7.1/calcite.css" />
+  <!-- <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/dark/main.css" /> -->
   <script src="https://js.arcgis.com/4.29/"></script>
-  <script defer src="script.js"></script>
+  <script src="script.js"></script>
+  <script type="module" src="https://js.arcgis.com/calcite-components/2.7.1/calcite.esm.js"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
   <div>
-
+    
     <div class="splitLeft">
       <div class="centered">
+        <calcite-button alignment="center" appearance="solid" kind="danger" scale="l" split-child="primary" width="full"
+        href="https://developers.arcgis.com/calcite-design-system/components/button/" icon-end="launch"
+        label="Open Null Island in map" target="_blank">Test tlacitko</calcite-button>
+        <calcite-tip id="calcitePaginationChange" heading="Platypus">
+          <img slot="thumbnail" src="platypus.jpg" alt="A platypus sensing its prey using electrical fields." />
+          <p>A platypus is a mammal with a bill, similar to a duck. They use their bill to sense prey via
+            electrolocation.</p>
+        </calcite-tip>
         <button type="button" class="collapsible"> Draw Graphics</button>
         <div class="contentOpen">
           <div id="sketchContainer"></div>
@@ -28,13 +39,20 @@
         <div class="contentOpen">
           <div id="layerListContainer"></div>
         </div>
+        
       </div>
+      
     </div>
-
+    
     <div class="splitRight">
       <div id="viewDiv"> </div>
+      <calcite-alert open label="A report alert" auto-close icon="applications" kind="success" placement="bottom">
+        <div slot="title">Aplikace nactena </div>
+        <div slot="message">Tohle je testovaci komponenta upozorneni</div>
+        <calcite-link slot="link" href="https://developers.arcgis.com/calcite-design-system/components/link/" target="_blank">Podivej se na dokumentaci</calcite-link>
+      </calcite-alert>
     </div>
-
   </div>
 </body>
+
 </html>

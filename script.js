@@ -2,6 +2,10 @@ require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/wid
 
   const collapsibleButtons = document.getElementsByClassName("collapsible"); // vyberu vsechly elementy dane tridy
 
+  document.addEventListener("click", event => {
+    console.log('image click ');
+  });
+
   // for (let i = 0; i < collapsibleButtons.length; i++) {
   //   collapsibleButtons[i].addEventListener("click", function() {
   //     this.classList.toggle("active");
@@ -21,7 +25,7 @@ require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/wid
   //     content.style.display = content.style.display === "block" ? "none" : "block"; //zobrazeni obsahu se prepne kontrolou vlastnosti style.display a pripadne ho prepnu / pomoci ternary operator
   //   });
 
-  
+
   // for (const button of collapsibleButtons) { //iterace po kazdem tlacitku v HTML kolekci
   //   button.addEventListener("click", function () { // pro kazde tlacitko pridam ovladac udalosti, po kliknuti se spusti callback funkce
   //     this.classList.toggle("active"); // this referencuje kliknute tlacitko - vypne se mi stylizace active
