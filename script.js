@@ -1,57 +1,91 @@
-require(["esri/Map","esri/WebMap", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/widgets/Sketch", "esri/layers/GraphicsLayer", "esri/widgets/Search", "esri/widgets/ScaleBar", "esri/widgets/LayerList", "esri/widgets/BasemapGallery"], (Map, WebMap, MapView, FeatureLayer, Sketch, GraphicsLayer, Search, ScaleBar, LayerList, BasemapGallery) => {
+require([
+  "esri/WebMap",
+  "esri/views/MapView",
+  "esri/widgets/Sketch",
+  "esri/layers/GraphicsLayer",
+  "esri/widgets/Search",
+  "esri/widgets/ScaleBar",
+  "esri/widgets/LayerList",
+  "esri/widgets/BasemapGallery",
+], (
+  WebMap,
+  MapView,
+  Sketch,
+  GraphicsLayer,
+  Search,
+  ScaleBar,
+  LayerList,
+  BasemapGallery
+) => {
+  // INICIALIZACE
   const graphicsLayer = new GraphicsLayer();
+  let programLayerView;
+
+  const programFilter = document.getElementById("program-filter");
+  const clearBtn = document.getElementById("clearFilter");
 
   const webmap = new WebMap({
     portalItem: {
-      id: "095b6944f4764c4a8ebf5d4483d7ee22"
-    }
+      id: "095b6944f4764c4a8ebf5d4483d7ee22",
+    },
   });
 
   const mapView = new MapView({
     container: "viewDiv",
     map: webmap,
 
-    // extent: {
-    //   // autocasts as new Extent()
-    //   xmin: -9177811,
-    //   ymin: 4247000,
-    //   xmax: -9176791,
-    //   ymax: 4247784,
-    //   spatialReference: 102100
-    // },
-
     padding: {
-      left: 49
+      left: 49,
+    },
+  });
+
+  // OVLADACE UDALOSTI
+  programFilter.addEventListener("click", filterByProgram);
+  clearBtn.addEventListener("click", () => {
+    programLayerView.filter = null;
+  });
+
+  // FILTRACE
+
+  /**
+   * Nastaveni atributoveho filtru na layerView
+   * @param {*} event
+   */
+  function filterByProgram(event) {
+    const selectedProgram = event.target.getAttribute("data-program");
+    if (selectedProgram !== "BaN") {
+      programLayerView.filter = {
+        where: "typ_studia = '" + selectedProgram + "'",
+      };
     }
+  }
 
-  });
-
-  /********************
-   * Add feature layer
-   ********************/
-  // Carbon storage of trees in Warren Wilson College.
-  const featureLayer = new FeatureLayer({
-    url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0"
-  });
-
+  // PRACE S MAPVIEW
   mapView.when(() => {
+    const layer = webmap.allLayers.find(function (layer) {
+      return layer.title === "studentiGaK";
+    });
+
+    mapView.whenLayerView(layer).then((layerView) => {
+      programLayerView = layerView; // ulozeni layerView do promenne
+    });
 
     const sketch = new Sketch({
       layer: graphicsLayer,
       view: mapView,
       creationMode: "single",
-      container: sketchContainer
+      container: sketchContainer,
     });
 
     // search widget
     const searchWidget = new Search({
-      view: mapView
+      view: mapView,
     });
-    // Adds the search widget below other elements in
-    // the top left corner of the view
+
+    // pridani searchWidgetu do mapy
     mapView.ui.add(searchWidget, {
       position: "top-left",
-      index: 0 // udava poradi widgetu nad sebou v rohu v mape
+      index: 0, // udava poradi widgetu nad sebou v rohu v mape
     });
 
     // scaleBar widget
@@ -60,34 +94,42 @@ require(["esri/Map","esri/WebMap", "esri/views/MapView", "esri/layers/FeatureLay
       style: "line",
       unit: "dual",
     });
-    // Add widget to the bottom left corner of the view
+
+    // pridani meritka do mapy
     mapView.ui.add(scaleBar, {
-      position: "bottom-left"
+      position: "bottom-left",
     });
 
     // layerList widget
     const layerList = new LayerList({
       view: mapView,
       container: layerListContainer,
-      dragEnabled: true
+      dragEnabled: true,
     });
 
     // BasemapGallery widget
     const basemapGallery = new BasemapGallery({
       view: mapView,
-      container: basemapGalleryContainer
+      container: basemapGalleryContainer,
     });
-
 
     let activeWidget;
 
+    /**
+     * Funkce ovladajici kliknuti na action bar
+     *
+     * @param {Object} target - target kliknuti.
+     * @return {void} nic nevraci
+     */
     const handleActionBarClick = ({ target }) => {
       if (target.tagName !== "CALCITE-ACTION") {
         return;
       }
 
       if (activeWidget) {
-        document.querySelector(`[data-action-id=${activeWidget}]`).active = false;
+        document.querySelector(
+          `[data-action-id=${activeWidget}]`
+        ).active = false;
         document.querySelector(`[data-panel-id=${activeWidget}]`).hidden = true;
       }
 
@@ -101,19 +143,20 @@ require(["esri/Map","esri/WebMap", "esri/views/MapView", "esri/layers/FeatureLay
       }
     };
 
-    document.querySelector("calcite-action-bar").addEventListener("click", handleActionBarClick);
+    document
+      .querySelector("calcite-action-bar")
+      .addEventListener("click", handleActionBarClick);
 
     let actionBarExpanded = false;
 
-    document.addEventListener("calciteActionBarToggle", event => {
+    document.addEventListener("calciteActionBarToggle", (event) => {
       actionBarExpanded = !actionBarExpanded;
       mapView.padding = {
-        left: actionBarExpanded ? 135 : 49
+        left: actionBarExpanded ? 135 : 49,
       };
     });
 
     document.querySelector("calcite-shell").hidden = false;
-
   });
 
   webmap.add(graphicsLayer);

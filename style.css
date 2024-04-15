@@ -19,3 +19,25 @@ calcite-loader {
   align-self: center;
   justify-self: center;
 }
+
+#program-filter {
+  height: auto;
+  width: 100%;
+}
+
+.program-item {
+  width: 100%;
+  padding: 12px;
+  text-align: center;
+  vertical-align: baseline;
+  cursor: pointer;
+  height: 40px;
+}
+
+.program-item:focus {
+  background-color: dimgrey;
+}
+
+.program-item:hover {
+  background-color: dimgrey;
+}

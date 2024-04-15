@@ -7,7 +7,6 @@
 
   <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
   <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/2.7.1/calcite.css" />
-  <!-- <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/dark/main.css" /> -->
   <script src="https://js.arcgis.com/4.29/"></script>
   <script src="script.js"></script>
   <script type="module" src="https://js.arcgis.com/calcite-components/2.7.1/calcite.esm.js"></script>
@@ -24,6 +23,7 @@
           <calcite-action data-action-id="basemaps" icon="basemap" text="Basemaps"></calcite-action>
           <calcite-action data-action-id="layers" icon="layers" text="Layers"></calcite-action>
           <calcite-action data-action-id="information" icon="information" text="Information"></calcite-action>
+          <calcite-action data-action-id="attribute-filter" icon="selection-filter" text="Attribute Filter"></calcite-action>
         </calcite-action-bar>
 
         <!-- Map-specific panels (each one provides a div for ArcGIS Maps SDK for JavaScript widgets) -->
@@ -46,7 +46,13 @@
               electrolocation.</p>
           </calcite-tip>
         </calcite-panel>
-
+        <calcite-panel heading="Attribute Filter" height-scale="l" data-panel-id="attribute-filter" hidden>
+          <div id="program-filter" class="esri-widget">
+            <div class="program-item visible-program" data-program="B">Bakalářský obor</div>
+            <div class="program-item visible-program" data-program="N">Magisterský obor</div>
+            <button id="clearFilter" data-program="BaN" class="esri-button">Clear filter</button>
+          </div>
+        </calcite-panel>
       </calcite-shell-panel>
 
       <div id="viewDiv"></div>
