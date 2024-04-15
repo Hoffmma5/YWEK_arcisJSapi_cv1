@@ -7,6 +7,7 @@ require([
   "esri/widgets/ScaleBar",
   "esri/widgets/LayerList",
   "esri/widgets/BasemapGallery",
+  "esri/widgets/TimeSlider"
 ], (
   WebMap,
   MapView,
@@ -15,11 +16,13 @@ require([
   Search,
   ScaleBar,
   LayerList,
-  BasemapGallery
+  BasemapGallery,
+  TimeSlider
 ) => {
   // INICIALIZACE
   const graphicsLayer = new GraphicsLayer();
   let programLayerView;
+  let actionBarExpanded = false;
 
   const programFilter = document.getElementById("program-filter");
   const clearBtn = document.getElementById("clearFilter");
@@ -68,6 +71,10 @@ require([
 
     mapView.whenLayerView(layer).then((layerView) => {
       programLayerView = layerView; // ulozeni layerView do promenne
+      timeSlider.fullTimeExtent = layer.timeInfo.fullTimeExtent.expandTo("years");
+      timeSlider.stops = {
+        interval: layer.timeInfo.interval
+      };
     });
 
     const sketch = new Sketch({
@@ -75,6 +82,12 @@ require([
       view: mapView,
       creationMode: "single",
       container: sketchContainer,
+    });
+
+    const timeSlider = new TimeSlider({
+      container: "timeSliderContainer",
+      mode: "time-window",
+      view: mapView
     });
 
     // search widget
@@ -146,8 +159,6 @@ require([
     document
       .querySelector("calcite-action-bar")
       .addEventListener("click", handleActionBarClick);
-
-    let actionBarExpanded = false;
 
     document.addEventListener("calciteActionBarToggle", (event) => {
       actionBarExpanded = !actionBarExpanded;
