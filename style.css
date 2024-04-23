@@ -1,43 +1,100 @@
 html,
 body,
 #viewDiv {
-  padding: 0;
-  margin: 0;
-  height: 100%;
+    padding: 0;
+    margin: 0;
+    height: 100%;
 }
 
-body {
-  --calcite-color-foreground-3: #88caf9;
-  display: flex;
+.splitLeft {
+    height: 100%;
+    width: 30%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 0px;
+    background-color: white;
+}
+
+.splitRight {
+    height: 100%;
+    width: 70%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
+    padding-top: 0px;
+    background-color: white;
+}
+
+.collapsible {
+    background-color: #1946d9;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    size: 18px;
+}
+
+.active {
+    background-color: #e8f412;
+}
+.collapsible:hover {
+    background-color: #7b9a09;
+}
+
+.content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+.contentOpen {
+    padding: 0 18px;
+    display: block;
+    overflow: hidden;
+    background-color: #f1f1f1;
 }
 
 calcite-button {
-  height: 2rem
+    height: 3rem;
 }
 
-calcite-loader {
-  align-self: center;
-  justify-self: center;
+#header-title {
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 #program-filter {
-  height: auto;
-  width: 100%;
-}
+    height: auto;
+    width: 100%;
+    /* visibility: hidden; */
+  }
 
-.program-item {
-  width: 100%;
-  padding: 12px;
-  text-align: center;
-  vertical-align: baseline;
-  cursor: pointer;
-  height: 40px;
-}
+  .program-item {
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    vertical-align: baseline;
+    cursor: pointer;
+    height: 40px;
+  }
 
-.program-item:focus {
-  background-color: dimgrey;
-}
+  .program-item:focus {
+    background-color: dimgrey;
+  }
 
-.program-item:hover {
-  background-color: dimgrey;
-}
+  .program-item:hover {
+    background-color: dimgrey;
+  }
+
+  #clearFilter {
+    background-color: red;
+  }
